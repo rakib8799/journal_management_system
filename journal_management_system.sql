@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `author_information` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `author_name` varchar(100) NOT NULL,
   `author_designation` varchar(30) NOT NULL,
   `author_university_name` varchar(200) NOT NULL,
@@ -49,19 +49,38 @@ INSERT INTO `author_information` (`id`, `author_name`, `author_designation`, `au
 -- --------------------------------------------------------
 
 --
--- Table structure for table `editor_information`
+-- Table structure for table `main_editor_information`
 --
 
-CREATE TABLE `editor_information` (
-  `id` int(11) NOT NULL,
-  `editor_name` varchar(100) NOT NULL,
-  `editor_designation` varchar(30) NOT NULL,
-  `editor_university_name` varchar(200) NOT NULL,
-  `editor_email` varchar(200) NOT NULL,
-  `editor_contact_no` varchar(11) NOT NULL,
-  `editor_country` varchar(200) NOT NULL,
-  `editor_password` varchar(200) NOT NULL
+CREATE TABLE `main_editor_information` (
+  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT, 
+  `main_editor_name` varchar(100) NOT NULL,
+  `main_editor_designation` varchar(30) NOT NULL,
+  `main_editor_university_name` varchar(200) NOT NULL,
+  `main_editor_email` varchar(200) NOT NULL,
+  `main_editor_contact_no` varchar(11) NOT NULL,
+  `main_editor_country` varchar(200) NOT NULL,
+  `main_editor_password` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `associative_editor_information`
+--
+
+CREATE TABLE `associative_editor_information` (
+  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `associative_editor_name` varchar(100) NOT NULL,
+  `associative_editor_designation` varchar(30) NOT NULL,
+  `associative_editor_university_name` varchar(200) NOT NULL,
+  `associative_editor_email` varchar(200) NOT NULL,
+  `associative_editor_contact_no` varchar(11) NOT NULL,
+  `associative_editor_country` varchar(200) NOT NULL,
+  `associative_editor_password` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 -- --------------------------------------------------------
 
@@ -70,7 +89,7 @@ CREATE TABLE `editor_information` (
 --
 
 CREATE TABLE `new_paper` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `author_id` int(11) NOT NULL,
   `paper_title` varchar(1000) NOT NULL,
   `paper_abstract` varchar(5000) NOT NULL,
@@ -105,7 +124,7 @@ INSERT INTO `new_paper` (`id`, `author_id`, `paper_title`, `paper_abstract`, `pa
 --
 
 CREATE TABLE `reviewer_information` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `reviewer_name` text NOT NULL,
   `reviewer_designation` varchar(30) NOT NULL,
   `reviewer_university_name` varchar(200) NOT NULL,

@@ -312,12 +312,12 @@
                 require 'phpmailer/PHPMailerAutoload.php';
                 $mail = new PHPMailer;
                 $sender_email = 'nazruljournal@gmail.com';
-                $sender_pass = 'nazruljournal@115';
+                $sender_pass = 'xtvxnhzkczbybjff';
           
                 $receiver = $_SESSION['author_email'];
-                // $mail->isSMTP(); // for localhost use enable this line otherwise don't use it
+                $mail->isSMTP(); // for localhost use enable this line otherwise don't use it
                 $mail->Host = 'smtp.gmail.com';
-                $mail->Port = 465;
+                $mail->Port = 587;
                 $mail->SMTPAuth = true;
                 $mail->SMTPSecure = 'tls';
         
@@ -338,6 +338,9 @@
                     $mail->clearReplyTos();
                     // mail_sent = 1 kore dilam er mane mail sent hoyse.
                     $mail_sent = 1;
+                }
+                else{
+                    echo "<h5>Mail is not sent yet</h5>";
                 }
                 
                 // change the session of next page

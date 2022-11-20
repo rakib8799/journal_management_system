@@ -113,7 +113,8 @@
                                         <option value="">Please Select To Login</option>
                                         <option <?php if(isset($_POST['select_author_reviewer_editor']) && $_POST['select_author_reviewer_editor']=="Author") echo "selected"; ?>>Author</option>
                                         <option <?php if(isset($_POST['select_author_reviewer_editor']) && $_POST['select_author_reviewer_editor']=="Reviewer") echo "selected";?>>Reviewer</option>
-                                        <option <?php if(isset($_POST['select_author_reviewer_editor']) && $_POST['select_author_reviewer_editor']=="Editor") echo "selected";?>>Editor</option>
+                                        <option <?php if(isset($_POST['select_author_reviewer_editor']) && $_POST['select_author_reviewer_editor']=="Main Editor") echo "selected";?>>Main Editor</option>
+                                        <option <?php if(isset($_POST['select_author_reviewer_editor']) && $_POST['select_author_reviewer_editor']=="Associative Editor") echo "selected";?>>Associative Editor</option>
                                     </select>
                                 </div>
                             </div>
@@ -185,9 +186,13 @@
         {
             $person = "reviewer";
         }
+        else if($select_author_reviewer_editor=="Main Editor")
+        {
+            $person = "main";
+        }
         else
         {
-            $person = "editor";
+            $person = "associative";
         }
         // table name
         $person_table_name = $person."_information";
