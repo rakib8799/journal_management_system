@@ -1,0 +1,43 @@
+:root{
+    --home_page_bg_color: #025c53;
+    --card_header_bg_color: #04423c;
+    --btn_color: #04423c;
+    --btn_hover_bg_color: black;
+    --btn_hover_text_color: yellow;
+ }
+
+.login:hover{background: #ccc; color:#333;transition: .3s;}
+
+/* eikhan theke amr coding suru tar age rahat er coding */
+.header_footer_bg_color
+ {
+     background-color: var(--home_page_bg_color);
+ }
+ .card_header
+ {
+    background-color: var(--card_header_bg_color);
+ }
+ .btn-success
+ {
+    background-color: var(--btn_color);
+ }
+ .btn:hover
+ {
+    background-color: var(--btn_hover_bg_color);
+    color: var(--btn_hover_text_color);
+    font-weight: bold;
+    transition: .5s;
+ }
+ .a_hover
+ {
+    color: white;
+    transition: all .5s;
+ }
+ .a_hover:hover
+ {
+    background-color: var(--btn_hover_bg_color);
+    border: 1px solid red;
+    color: var(--btn_hover_text_color);
+    border-radius: 5px;
+ }
+  
