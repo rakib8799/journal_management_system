@@ -1,4 +1,11 @@
 <?php include('associative_editor_header.php') ?>
+<?php
+if (isset($_GET["id"])) {
+    $id = $_GET["id"];
+    $update_qry = "UPDATE `new_paper` SET `paper_status`=4 WHERE `id`='$id'";
+    $run_qry = mysqli_query($conn, $update_qry);
+}
+?>
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-lg-11 col-12">
@@ -20,7 +27,7 @@
                             <tbody>
                                 <?php
                                 // select paper information
-                                $select_from_new_paper = "SELECT * FROM `new_paper` WHERE `author_id` = '$_SESSION[author_id]'";
+                                $select_from_new_paper = "SELECT * FROM `new_paper` WHERE `paper_status` = 4";
                                 $run_select_from_new_paper = mysqli_query($conn, $select_from_new_paper);
                                 $serial_no = 1;
                                 while ($row = mysqli_fetch_assoc($run_select_from_new_paper)) {
@@ -35,20 +42,14 @@
                                     <td>
                                         <?php echo date('d-M-Y', strtotime($row['timestamps'])) ?>
                                     </td>
-                                    <?php
-                                    if ($row['paper_status'] == 1) {
-                                            ?>
                                     <td class="bg-black text-light fw-bold">
-                                        <?php echo "Submitted" ?>
+                                        <?php echo "Assigned" ?>
                                     </td>
-                                    <?php
-                                    }
-                                                    ?>
                                 </tr>
                                 <?php
                                     $serial_no++;
                                 }
-                                        ?>
+                                ?>
                             </tbody>
                         </table>
                     </div>

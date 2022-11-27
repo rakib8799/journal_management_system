@@ -1,15 +1,8 @@
-<?php include('main_editor_header.php') ?>
+<?php include('associative_editor_header.php') ?>
 <?php
-// if (isset($_POST['invite'])) {
-//     //     extract($_POST);
-// //     echo "<pre>";
-// //     print_r($_POST);
-//     $select_associative_editor = $_POST['select_associative_editor'];
-//     echo $select_associative_editor;
-// }
-if (isset($_GET["id"])) {
+if (isset($_GET['id'])) {
     $id = $_GET["id"];
-    $update_qry = "UPDATE `new_paper` SET `paper_status`=2 WHERE `id`='$id'";
+    $update_qry = "UPDATE `new_paper` SET `paper_status`=3 WHERE `id`='$id'";
     $run_qry = mysqli_query($conn, $update_qry);
 }
 // if ($update_qry) {
@@ -50,7 +43,7 @@ if (isset($_GET["id"])) {
         <div class="col-lg-11 col-12">
             <div class="card mt-2 shadow p-3 mb-5 bg-body rounded">
                 <div class="card-header">
-                    <h3 class="text-center text-secondary fw-bold">Paper Status</h3>
+                    <h3 class="text-center text-secondary fw-bold">Assign Reviewer</h3>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -59,14 +52,15 @@ if (isset($_GET["id"])) {
                                 <tr>
                                     <th>Serial No</th>
                                     <th width="50%">Paper Title</th>
-                                    <th>Submission Date</th>
                                     <th>Status</th>
+                                    <th>Select</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 // select paper information
-                                $select_from_new_paper = "SELECT * FROM `new_paper` WHERE `paper_status` = 2";
+                                $select_from_new_paper = "SELECT * FROM `new_paper` WHERE `paper_status` = 3";
                                 $run_select_from_new_paper = mysqli_query($conn, $select_from_new_paper);
                                 $serial_no = 1;
                                 while ($row = mysqli_fetch_assoc($run_select_from_new_paper)) {
@@ -78,11 +72,32 @@ if (isset($_GET["id"])) {
                                     <td>
                                         <?php echo $row['paper_title'] ?>
                                     </td>
+                                    <?php if ($row['paper_status'] == 3) {
+                                    ?>
+                                    <td class="bg-dark text-light fw-bold">To Associative Editor</td>
+                                    <?php
+                                    } ?>
                                     <td>
-                                        <?php echo date('d-M-Y', strtotime($row['timestamps'])) ?>
+                                        <select class="form-control" name="select_reviewer">
+                                            <option value="">Select Reviewer</option>
+                                            <?php
+                                    $select_qry = "SELECT * FROM `reviewer_information`";
+                                    $run_qry = mysqli_query($conn, $select_qry);
+                                    if (mysqli_num_rows($run_qry) > 0) {
+                                        while ($row1 = mysqli_fetch_assoc($run_qry)) {
+                                            ?>
+                                            <option value="<?php echo $row1['reviewer_name']; ?>">
+                                                <?php echo $row1['reviewer_name']; ?>
+                                            </option>
+                                            <?php
+                                        }
+                                    }
+                                            ?>
+                                        </select>
                                     </td>
-                                    <td class="bg-black text-light fw-bold">
-                                        <?php echo "Invited" ?>
+                                    <td>
+                                        <a href="paper_status.php?id=<?php echo $row['id'] ?>"
+                                            class="btn btn-danger text-light fw-bold">Assign</a>
                                     </td>
                                 </tr>
                                 <?php
@@ -97,4 +112,4 @@ if (isset($_GET["id"])) {
         </div>
     </div>
 </div>
-<?php include('main_editor_footer.php') ?>
+<?php include('associative_editor_footer.php') ?>

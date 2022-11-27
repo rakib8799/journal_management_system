@@ -9,7 +9,7 @@ if (!isset($_SESSION['reviewer_id'])) {
 <?php
   exit();
 }
-    ?>
+?>
 <!DOCTYPE html>
 <html>
 
@@ -57,10 +57,16 @@ if (!isset($_SESSION['reviewer_id'])) {
       <hr>
     </p>
     <ul class="list-unstyled">
-      <li class="sidebar-item active"><a class="sidebar-link fs-5" href="new_paper_submission.php"> <i
-            class="fa-solid fa-file-circle-plus m-1"></i> New Paper</a></li>
-      <li class="sidebar-item"><a class="sidebar-link fs-5" href="revised_paper_submission.php"> <i
-            class="fa-solid fa-file-circle-exclamation m-1"></i> Revised Paper </a></li>
+      <li class="sidebar-item active"><a class="sidebar-link fs-5" href="new_assigned_paper.php"> <i
+            class="fa-solid fa-file-circle-plus m-1"></i> New Assigned Papers</a></li>
+      <li class="sidebar-item"><a class="sidebar-link fs-5" href="on_review.php"> <i
+            class="fa-solid fa-file-circle-exclamation m-1"></i> On Review </a></li>
+      <li class="sidebar-item"><a class="sidebar-link fs-5" href="rejected_paper.php"> <i
+            class="fa-solid fa-file-circle-exclamation m-1"></i> Rejected Papers </a></li>
+      <li class="sidebar-item"><a class="sidebar-link fs-5" href="need_changes.php"> <i
+            class="fa-solid fa-file-circle-exclamation m-1"></i> Need Changes </a></li>
+      <li class="sidebar-item"><a class="sidebar-link fs-5" href="completed_paper.php"> <i
+            class="fa-solid fa-file-circle-exclamation m-1"></i> Completed Papers </a></li>
       <li class="sidebar-item"><a class="sidebar-link fs-5" href="paper_status.php"> <i
             class="fa-solid fa-signal m-1"></i></i> Status </a></li>
 

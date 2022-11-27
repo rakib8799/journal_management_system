@@ -9,7 +9,7 @@ if (!isset($_SESSION['associative_editor_id'])) {
 <?php
   exit();
 }
-    ?>
+?>
 <!DOCTYPE html>
 <html>
 
@@ -57,12 +57,14 @@ if (!isset($_SESSION['associative_editor_id'])) {
       <hr>
     </p>
     <ul class="list-unstyled">
-      <li class="sidebar-item active"><a class="sidebar-link fs-5" href="new_paper_submission.php"> <i
-            class="fa-solid fa-file-circle-plus m-1"></i> New Paper</a></li>
-      <li class="sidebar-item"><a class="sidebar-link fs-5" href="revised_paper_submission.php"> <i
-            class="fa-solid fa-file-circle-exclamation m-1"></i> Revised Paper </a></li>
+      <li class="sidebar-item active"><a class="sidebar-link fs-5" href="new_submitted_papers.php"> <i
+            class="fa-solid fa-file-circle-plus m-1"></i> New Submitted Papers</a></li>
+      <li class="sidebar-item"><a class="sidebar-link fs-5" href="invited_paper.php"> <i
+            class="fa-solid fa-file-circle-exclamation m-1"></i> Invited Papers </a></li>
+      <li class="sidebar-item"><a class="sidebar-link fs-5" href="assign_reviewer.php"> <i
+            class="fa-solid fa-signal m-1"></i></i> Assign Reviewer</a></li>
       <li class="sidebar-item"><a class="sidebar-link fs-5" href="paper_status.php"> <i
-            class="fa-solid fa-signal m-1"></i></i> Status </a></li>
+            class="fa-solid fa-signal m-1"></i></i> Paper Status</a></li>
 
     </ul>
   </nav>
