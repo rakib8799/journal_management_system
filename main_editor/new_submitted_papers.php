@@ -24,7 +24,7 @@
                   <tbody>
                     <?php
                     // select paper information
-                    $select_from_new_paper = "SELECT * FROM `new_paper` WHERE `paper_status`=1";
+                    $select_from_new_paper = "SELECT * FROM `new_paper` WHERE `paper_status`=1 or `paper_status`=10";
                     $run_select_from_new_paper = mysqli_query($conn, $select_from_new_paper);
                     $serial_no = 1;
                     if (mysqli_num_rows($run_select_from_new_paper) > 0) {
@@ -37,14 +37,27 @@
                       <td>
                         <?php echo $row['paper_title'] ?>
                       </td>
-                      <td class="bg-black text-light fw-bold">
+                      <?php
+                      if($row['paper_status']==1){
+                        ?>
+                        <td class="bg-black text-light fw-bold">
                         <?php echo "Recently Submitted" ?>
                       </td>
+                      <?php
+                      }
+                      else{
+                        ?>
+                        <td class="bg-black text-light fw-bold">
+                        <?php echo "Recently Updated" ?>
+                      </td>
+                      <?php
+                      }
+                      ?>
                       <td>
-                        <select class="form-control" name="select_associative_editor">
+                        <select class="form-control" name="select_associative_editor" id="select_associative_editor" onchange="selectEditor(this.value)">
                           <option value="">Select Associative Editors</option>
                           <?php
-                        $select_qry = "SELECT * FROM `associative_editor_information`";
+                        $select_qry = "SELECT `associative_editor_name` FROM `associative_editor_information`";
                         $run_qry = mysqli_query($conn, $select_qry);
                         if (mysqli_num_rows($run_qry) > 0) {
                           while ($row1 = mysqli_fetch_assoc($run_qry)) {
@@ -59,10 +72,8 @@
                         </select>
                       </td>
                       <td>
-                        <!-- <input type="submit" class="btn btn-danger text-light fw-bold" name="invite"> -->
-                        <!-- <button onclick="changeSelect()" class="btn btn-danger text-light fw-bold nav-link">Invite</a> -->
                         <a href="paper_status.php?id=<?php echo $row['id'] ?>"
-                          class="btn btn-danger text-light fw-bold">Invite</a>
+                          class="btn btn-success text-light fw-bold">Invite</a>
                       </td>
                     </tr>
                     <?php
@@ -79,5 +90,11 @@
       </div>
     </div>
   </div>
+  <script>
+    function selectEditor(str){
+      const currentDate = new Date();
+      document.cookie = `associative_editor=${str}; expires=${new Date(currentDate.getTime() + (5 * 60 * 1000))}`;
+  }
+    </script>
 </body>
 <?php include('main_editor_footer.php') ?>

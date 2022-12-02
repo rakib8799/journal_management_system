@@ -24,7 +24,8 @@ if (isset($_GET['id'])) {
                     <th>Serial No</th>
                     <th width="50%">Paper Title</th>
                     <th>Status</th>
-                    <!-- <th>Action</th> -->
+                    <th>Select</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -35,6 +36,7 @@ if (isset($_GET['id'])) {
                   $serial_no = 1;
                   if (mysqli_num_rows($run_select_from_new_paper) > 0) {
                     while ($row = mysqli_fetch_assoc($run_select_from_new_paper)) {
+                      $_SESSION['paper_status'] = $row['paper_status'] ;
                   ?>
                   <tr>
                     <td>
@@ -45,6 +47,28 @@ if (isset($_GET['id'])) {
                     </td>
                     <td class="bg-black text-light fw-bold">
                       <?php echo "Completed" ?>
+                    </td>
+                    <td>
+                        <select class="form-control" name="select_author" id="select_author" onchange="selectAuthor(this.value)">
+                          <option value="">Select Author</option>
+                          <?php
+                        $select_qry = "SELECT `author_name` FROM `author_information`";
+                        $run_qry = mysqli_query($conn, $select_qry);
+                        if (mysqli_num_rows($run_qry) > 0) {
+                          while ($row1 = mysqli_fetch_assoc($run_qry)) {
+                          ?>
+                          <option value="<?php echo $row1['author_name']; ?>">
+                            <?php echo $row1['author_name']; ?>
+                          </option>
+                          <?php
+                          }
+                        }
+                          ?>
+                        </select>
+                      </td>
+                    <td>
+                    <a
+                        href="paper_status.php?id=<?php echo $row['id'] ?>" class="btn btn-success fw-bold">Send</a>
                     </td>
                   </tr>
                   <?php
@@ -61,5 +85,11 @@ if (isset($_GET['id'])) {
       </div>
     </div>
   </div>
+  <script>
+    function selectAuthor(str){
+      const currentDate = new Date();
+      document.cookie = `author=${str}; expires=${new Date(currentDate.getTime() + (5 * 60 * 1000))}`;
+  }
+    </script>
 </body>
 <?php include('reviewer_footer.php') ?>

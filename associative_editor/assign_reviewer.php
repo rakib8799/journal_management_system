@@ -5,39 +5,8 @@ if (isset($_GET['id'])) {
     $update_qry = "UPDATE `new_paper` SET `paper_status`=3 WHERE `id`='$id'";
     $run_qry = mysqli_query($conn, $update_qry);
 }
-// if ($update_qry) {
-//     //mail sending
-//     require 'phpmailer/PHPMailerAutoload.php';
-//     $mail = new PHPMailer;
-//     $sender_email = $_SESSION['main_editor_email'];
-//     $sender_pass = 'ekscqyeqxszuxftq';
-//     $mail->isSMTP(); // for localhost use enable this line otherwise don't use it
-//     $mail->Host = 'smtp.gmail.com';
-//     $mail->Port = 587;
-//     $mail->SMTPAuth = true;
-//     $mail->SMTPSecure = 'tls';
-
-//     $mail->Username = $sender_email; // Sender Email Id
-//     $mail->Password = $sender_pass; // password of gmail
-
-//     $mail->setFrom($sender_email, 'MAIN EDITOR');
-
-//     $mail->addAddress($_SESSION['associative_editor_email']);
-//     $mail->addReplyTo($sender_email);
-
-//     $mail->isHTML(true);
-//     $mail->Subject = "Newly Submitted Papers";
-//     $mail->Body = '<h5>Dear Sir/Madam, <br />You are requested to check our invited papers. Please check those papers. <br /> <br /> Best Regards, MAIN EDITOR</h5>';
-//     if ($mail->send()) {
-//         $mail->ClearAddresses();
-//         $mail->clearReplyTos();
-//         // mail_sent = 1 kore dilam er mane mail sent hoyse.
-//         $mail_sent = 1;
-//     } else {
-//         echo "<h5>Mail is not sent yet</h5>";
-//     }
-// }
 ?>
+<body>
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-lg-11 col-12">
@@ -72,16 +41,12 @@ if (isset($_GET['id'])) {
                                     <td>
                                         <?php echo $row['paper_title'] ?>
                                     </td>
-                                    <?php if ($row['paper_status'] == 3) {
-                                    ?>
                                     <td class="bg-dark text-light fw-bold">To Associative Editor</td>
-                                    <?php
-                                    } ?>
                                     <td>
-                                        <select class="form-control" name="select_reviewer">
+                                        <select class="form-control" name="select_reviewer" onchange="selectReviewer(this.value)">
                                             <option value="">Select Reviewer</option>
                                             <?php
-                                    $select_qry = "SELECT * FROM `reviewer_information`";
+                                    $select_qry = "SELECT `reviewer_name` FROM `reviewer_information`";
                                     $run_qry = mysqli_query($conn, $select_qry);
                                     if (mysqli_num_rows($run_qry) > 0) {
                                         while ($row1 = mysqli_fetch_assoc($run_qry)) {
@@ -97,7 +62,7 @@ if (isset($_GET['id'])) {
                                     </td>
                                     <td>
                                         <a href="paper_status.php?id=<?php echo $row['id'] ?>"
-                                            class="btn btn-danger text-light fw-bold">Assign</a>
+                                            class="btn btn-success text-light fw-bold">Assign</a>
                                     </td>
                                 </tr>
                                 <?php
@@ -112,4 +77,11 @@ if (isset($_GET['id'])) {
         </div>
     </div>
 </div>
+<script>
+    function selectReviewer(str){
+      const currentDate = new Date();
+      document.cookie = `reviewer=${str}; expires=${new Date(currentDate.getTime() + (5 * 60 * 1000))}`;
+  }
+    </script>
+    </body>
 <?php include('associative_editor_footer.php') ?>

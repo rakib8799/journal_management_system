@@ -1,11 +1,4 @@
 <?php include('associative_editor_header.php') ?>
-<?php
-if (isset($_GET['id'])) {
-  $id = $_GET["id"];
-  $update_qry = "UPDATE `new_paper` SET `paper_status`=2 WHERE `id`='$id'";
-  $run_qry = mysqli_query($conn, $update_qry);
-}
-?>
 <div class="container-fluid">
   <div class="row justify-content-center">
     <div class="col-lg-11 col-12">

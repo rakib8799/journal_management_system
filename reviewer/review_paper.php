@@ -2,8 +2,8 @@
 <?php
 if (isset($_GET['id'])) {
   $id = $_GET["id"];
-  $update_qry = "UPDATE `new_paper` SET `paper_status`=5 WHERE `id`='$id'";
-  $run_qry = mysqli_query($conn, $update_qry);
+  // $update_qry = "UPDATE `new_paper` SET `paper_status`=5 WHERE `id`='$id'";
+  // $run_qry = mysqli_query($conn, $update_qry);
 }
 ?>
 
@@ -71,8 +71,6 @@ if (isset($_GET['id'])) {
                           style="display:none"></textarea>
                       </td>
                       <td>
-                        <!-- <a href="paper_status.php?id=<?php echo $row['id'] ?>"
-                          class="btn btn-success text-light fw-bold">Submit</a> -->
                         <input type="hidden" name="id" value="<?php echo $row['id'] ?>">
                         <input type="submit" value="Submit" name="submit" class="btn btn-success text-white fw-bold">
                       </td>

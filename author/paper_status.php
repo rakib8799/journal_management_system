@@ -124,10 +124,73 @@ if (mysqli_num_rows($run_qry2)) {
                                     if ($row['paper_status'] == 1) {
                                     ?>
                                     <td class="bg-black text-light fw-bold">
-                                        <?php echo "Submitted" ?>
+                                        <?php echo "Submitted To Main and Associative Editor" ?>
                                     </td>
                                     <?php
                                     }
+                                    else if ($row['paper_status'] == 2) {
+                                        ?>
+                                        <td class="bg-black text-light fw-bold">
+                                            <?php echo "Invited To Associative Editor" ?>
+                                        </td>
+                                        <?php
+                                        }
+                                        else if ($row['paper_status'] == 3) {
+                                            ?>
+                                            <td class="bg-black text-light fw-bold">
+                                                <?php echo "To Associative Editor" ?>
+                                            </td>
+                                            <?php
+                                            }
+                                            else if ($row['paper_status'] == 4) {
+                                                ?>
+                                                <td class="bg-black text-light fw-bold">
+                                                    <?php echo "Assigned To Reviewer" ?>
+                                                </td>
+                                                <?php
+                                                }
+                                                else if ($row['paper_status'] == 5) {
+                                                    ?>
+                                                    <td class="bg-black text-light fw-bold">
+                                                        <?php echo "Ready To Review" ?>
+                                                    </td>
+                                                    <?php
+                                                    }
+                                                    else if ($row['paper_status'] == 6) {
+                                                        ?>
+                                                        <td class="bg-black text-light fw-bold">
+                                                            <?php echo "Completed" ?>
+                                                        </td>
+                                                        <?php
+                                                        }
+                                                        else if ($row['paper_status'] == 7) {
+                                                            ?>
+                                                            <td class="bg-black text-light fw-bold">
+                                                                <?php echo "Rejected" ?>
+                                                            </td>
+                                                            <?php
+                                                            }
+                                                            else if ($row['paper_status'] == 8) {
+                                                                ?>
+                                                                <td class="bg-black text-light fw-bold">
+                                                                    <?php echo "Need Changes" ?>
+                                                                </td>
+                                                                <?php
+                                                                }
+                                                                else if ($row['paper_status'] == 9) {
+                                                                    ?>
+                                                                    <td class="bg-black text-light fw-bold">
+                                                                        <?php echo "Submitted To Author" ?>
+                                                                    </td>
+                                                                    <?php
+                                                                    }
+                                                                    else if ($row['paper_status'] == 10) {
+                                                                        ?>
+                                                                        <td class="bg-black text-light fw-bold">
+                                                                            <?php echo "Successfully Updated" ?>
+                                                                        </td>
+                                                                        <?php
+                                                                        }
                                     ?>
                                 </tr>
                                 <?php

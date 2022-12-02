@@ -65,6 +65,8 @@ if (!isset($_SESSION['associative_editor_id'])) {
             class="fa-solid fa-signal m-1"></i></i> Assign Reviewer</a></li>
       <li class="sidebar-item"><a class="sidebar-link fs-5" href="paper_status.php"> <i
             class="fa-solid fa-signal m-1"></i></i> Paper Status</a></li>
+      <li class="sidebar-item"><a class="sidebar-link fs-5" href="completed_paper.php"> <i
+            class="fa-solid fa-signal m-1"></i></i> Completed Paper</a></li>
 
     </ul>
   </nav>

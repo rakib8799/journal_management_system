@@ -1,12 +1,4 @@
 <?php include('associative_editor_header.php') ?>
-<?php
-if (isset($_GET['id'])) {
-  $id = $_GET["id"];
-  $update_qry = "UPDATE `new_paper` SET `paper_status`=1 WHERE `id`='$id'";
-  $run_qry = mysqli_query($conn, $update_qry);
-}
-?>
-
 <body>
   <div class="container-fluid">
     <div class="row justify-content-center">
@@ -29,8 +21,7 @@ if (isset($_GET['id'])) {
                 </thead>
                 <tbody>
                   <?php
-                  // select paper information
-                  $select_from_new_paper = "SELECT * FROM `new_paper` WHERE `paper_status`=1";
+                  $select_from_new_paper = "SELECT * FROM `new_paper` WHERE `paper_status`=1 or `paper_status`=10";
                   $run_select_from_new_paper = mysqli_query($conn, $select_from_new_paper);
                   $serial_no = 1;
                   if (mysqli_num_rows($run_select_from_new_paper) > 0) {
@@ -43,14 +34,25 @@ if (isset($_GET['id'])) {
                     <td>
                       <?php echo $row['paper_title'] ?>
                     </td>
-                    <td class="bg-black text-light fw-bold">
+                    <?php
+                     if($row['paper_status']==1){
+                      ?>
+                      <td class="bg-black text-light fw-bold">
                       <?php echo "Recently Submitted" ?>
                     </td>
+                    <?php
+                    }
+                    else{
+                      ?>
+                      <td class="bg-black text-light fw-bold">
+                      <?php echo "Recently Updated" ?>
+                    </td>
+                    <?php
+                    }
+                    ?>
                     <td>
-                      <!-- <input type="submit" class="btn btn-danger text-light fw-bold" name="handle" value="Handle"> -->
-                      <!-- <button onclick="changeSelect()" class="btn btn-danger text-light fw-bold nav-link">Invite</a> -->
                       <a href="assign_reviewer.php?id=<?php echo $row['id'] ?>"
-                        class="btn btn-danger text-light fw-bold">Handle</a>
+                        class="btn btn-success text-light fw-bold">Handle</a>
                     </td>
                   </tr>
                   <?php

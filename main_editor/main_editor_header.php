@@ -59,10 +59,10 @@ if (!isset($_SESSION['main_editor_id'])) {
     <ul class="list-unstyled">
       <li class="sidebar-item active"><a class="sidebar-link fs-5" href="new_submitted_papers.php"> <i
             class="fa-solid fa-file-circle-plus m-1"></i> New Submitted Papers</a></li>
-      <li class="sidebar-item"><a class="sidebar-link fs-5" href="revised_paper_submission.php"> <i
-            class="fa-solid fa-file-circle-exclamation m-1"></i> Revised Paper </a></li>
       <li class="sidebar-item"><a class="sidebar-link fs-5" href="paper_status.php"> <i
             class="fa-solid fa-signal m-1"></i></i> Status </a></li>
+      <li class="sidebar-item"><a class="sidebar-link fs-5" href="completed_paper.php"> <i
+            class="fa-solid fa-signal m-1"></i></i> Completed Paper </a></li>
 
     </ul>
   </nav>
