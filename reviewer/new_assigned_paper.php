@@ -40,8 +40,6 @@
                       <?php echo "Ready To review" ?>
                     </td>
                     <td>
-                      <!-- <input type="submit" class="btn btn-danger text-light fw-bold" name="handle" value="Handle"> -->
-                      <!-- <button onclick="changeSelect()" class="btn btn-danger text-light fw-bold nav-link">Invite</a> -->
                       <a href="on_review.php?id=<?php echo $row['id'] ?>" class="btn btn-success text-light fw-bold">To
                         Review</a>
                     </td>

@@ -1,8 +1,17 @@
 <?php include('author_header.php') ?>
 <?php
-$select_qry2 = "SELECT * FROM `new_paper`  WHERE `paper_status`=1";
-$run_qry2 = mysqli_query($conn, $select_qry2);
-if (mysqli_num_rows($run_qry2)) {
+if(isset($_GET['id'])){
+    $id=$_GET['id'];
+    $select_qry = "SELECT * FROM `new_paper`  WHERE `id`='$id' and (`paper_status`=1 or `paper_status`=10)";
+$run_qry = mysqli_query($conn, $select_qry);
+if (mysqli_num_rows($run_qry)>0) {
+  $row = mysqli_fetch_assoc($run_qry);
+  if($row['paper_status']==1){
+    $body = "Newly Submitted Papers";
+  }
+  else if($row['paper_status']==10){
+    $body = "Updated Paper";
+  }
     // mail sending
     require 'phpmailer/PHPMailerAutoload.php';
     $mail = new PHPMailer;
@@ -27,19 +36,11 @@ if (mysqli_num_rows($run_qry2)) {
         $_SESSION['associative_editor_email'] = $arr;
     }
 
-    // $receiver = $_SESSION['main_editor_email'];
     if (count($_SESSION['associative_editor_email']) > 0) {
         $values = [];
         foreach ($_SESSION['associative_editor_email'] as $id => $value) {
-            // Get data for this product
-            // $values = $values . $value . ",";
-            // array_push($values, $value);
-            // $address = array($_SESSION['main_editor_email'], $value);
-            // print_r($value);
             $mail->addAddress($value); // Receiver Email Address
         }
-        // $address = array($_SESSION['main_editor_email'], $values);
-        // print_r($address);
     }
 
     $mail->isSMTP(); // for localhost use enable this line otherwise don't use it
@@ -53,30 +54,26 @@ if (mysqli_num_rows($run_qry2)) {
 
     $mail->setFrom($sender_email, 'AUTHOR');
 
-    // $values1 = [];
-// foreach ($address as $id => $value) {
-//     // array_push($values1, $value);
-//     // $mail->addAddress($value);
-//     // $address = array($_SESSION['main_editor_email'], $value);
-//     print_r($value);
-// }
-// $receiver = implode(",", $values1);
-// $mail->addAddress($receiver); // Multiple Receiver Email Address
-
     // $mail->addAddress($receiver); // Receiver Email Address
     $mail->addReplyTo($sender_email);
 
     $mail->isHTML(true);
-    $mail->Subject = "Newly Submitted Papers";
-    $mail->Body = '<h5>Dear Sir/Madam, <br />You are requested to check our newly submitted papers. Please check those papers. <br /> <br /> Best Regards, AUTHOR</h5>';
+    $mail->Subject = $body;
+    $mail->Body = '<h5>Dear Sir/Madam, <br />You are requested to check our '.$body.'. Please check those papers. <br /> <br /> Best Regards, AUTHOR</h5>';
     if ($mail->send()) {
         $mail->ClearAddresses();
         $mail->clearReplyTos();
         // mail_sent = 1 kore dilam er mane mail sent hoyse.
         $mail_sent = 1;
+        ?>
+        <script>
+            window.alert("Your Paper Has Successfully sent to Main Editor as well as all the Associative Editors email");
+        </script>
+        <?php
     } else {
         echo "<h5>Mail is not sent yet</h5>";
     }
+}
 }
 ?>
 
@@ -86,10 +83,6 @@ if (mysqli_num_rows($run_qry2)) {
             <div class="card mt-2 shadow p-3 mb-5 bg-body rounded">
                 <div class="card-header">
                     <h3 class="text-center text-secondary fw-bold">Paper Status</h3>
-                    <!-- <p>Send newly submitted papers to all editors</p>
-                    <form action="" method="post">
-                        <input type="submit" value="Send" name="send_email" class="btn btn-danger text-light fw-bold">
-                    </form> -->
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">

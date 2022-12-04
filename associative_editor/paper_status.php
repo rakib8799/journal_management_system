@@ -8,7 +8,6 @@ if (isset($_GET["id"])) {
     if (mysqli_num_rows($run_qry) > 0) {
         $row = mysqli_fetch_assoc($run_qry);
         $_SESSION['reviewer_email'] = $row['reviewer_email'];
-    }
 
     $id = $_GET["id"];
     $update_qry = "UPDATE `new_paper` SET `paper_status`=4 WHERE `id`='$id'";
@@ -43,9 +42,15 @@ if (isset($_GET["id"])) {
         $mail->clearReplyTos();
         // mail_sent = 1 kore dilam er mane mail sent hoyse.
         $mail_sent = 1;
+        ?>
+        <script>
+            window.alert("Your Paper Has Successfully sent to the specific Reviewer's email");
+        </script>
+        <?php
     } else {
         echo "<h5>Mail is not sent yet</h5>";
     }
+}
 }
 ?>
 <div class="container-fluid">

@@ -25,7 +25,8 @@ else if(isset($_GET['id'])){
             $body = "accepted";
         else if($_SESSION['paper_status']==7)
             $body = "rejected";
-        else $body = "needed to change/update - ".$comment;
+        else  if($_SESSION['paper_status']==8) 
+            $body = "needed to change/update - ".$comment;
     }
 
     $_SESSION['author'] = $_COOKIE['author'];
@@ -35,7 +36,6 @@ else if(isset($_GET['id'])){
     if (mysqli_num_rows($run_qry) > 0) {
         $row = mysqli_fetch_assoc($run_qry);
         $_SESSION['author_email'] = $row['author_email'];
-    }
 
         // mail sending
     require 'phpmailer/PHPMailerAutoload.php';
@@ -70,9 +70,15 @@ else if(isset($_GET['id'])){
         $mail_sent = 1;
         $update_qry = "UPDATE `new_paper` SET `paper_status`=9 WHERE `id`='$id'";
         $run_qry = mysqli_query($conn, $update_qry);
+        ?>
+        <script>
+            window.alert("Your Paper Has Successfully sent to the specific Author's email");
+        </script>
+        <?php
     } else {
         echo "<h5>Mail is not sent yet</h5>";
     }
+}
 }
 ?>
 <div class="container-fluid">
