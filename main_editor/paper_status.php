@@ -3,21 +3,25 @@
 if (isset($_GET["id"])) {
     $_SESSION['associative_editor'] = $_COOKIE['associative_editor'];
     $associative = $_SESSION['associative_editor'];
-    $select_qry = "SELECT `associative_editor_email` FROM `associative_editor_information` WHERE `associative_editor_name` = '$associative'";
+    $select_qry = "SELECT * FROM `associative_editor_information` WHERE `associative_editor_name` = '$associative'";
     $run_qry = mysqli_query($conn, $select_qry);
     if (mysqli_num_rows($run_qry) > 0) {
         $row = mysqli_fetch_assoc($run_qry);
         $_SESSION['associative_editor_email'] = $row['associative_editor_email'];
+        $associative_id = $row['id'];
 
     $id = $_GET["id"];
     $update_qry = "UPDATE `new_paper` SET `paper_status`=2 WHERE `id`='$id'";
-    $run_qry = mysqli_query($conn, $update_qry);
+    mysqli_query($conn, $update_qry);
+
+    $insert_qry = "UPDATE `new_paper` SET `associative_editor_id`='$associative_id' WHERE `id`='$id'";
+    mysqli_query($conn, $insert_qry);
 
      // mail sending
      require 'phpmailer/PHPMailerAutoload.php';
      $mail = new PHPMailer;
-     $sender_email = $_SESSION['main_editor_email'];
-     $sender_pass = 'shixnadkzatevdpm';
+     $sender_email = 'nazruljournal@gmail.com';
+     $sender_pass = 'xtvxnhzkczbybjff';
 
      $receiver = $_SESSION['associative_editor_email'];
      $mail->isSMTP(); // for localhost use enable this line otherwise don't use it
@@ -29,14 +33,14 @@ if (isset($_GET["id"])) {
      $mail->Username = $sender_email; // Sender Email Id
      $mail->Password = $sender_pass; // password of gmail
 
-     $mail->setFrom($sender_email, $_SESSION['associative_editor']);
+     $mail->setFrom($sender_email, 'JKKNIU');
 
      $mail->addAddress($receiver); // Receiver Email Address
      $mail->addReplyTo($sender_email);
 
      $mail->isHTML(true);
      $mail->Subject = "Paper Invitation";
-     $mail->Body = '<h5>Dear Sir/Madam, <br />You have successfully invited by the main editor. Please check your paper status. <br /> <br /> Best Regards, MAIN EDITOR Journal Organization</h5>';
+     $mail->Body = '<h5>Dear Sir/Madam, <br />You have successfully invited by the main editor. Please check your paper status. <br /> <br /> Best Regards, JKKNIU Journal Organization</h5>';
      if ($mail->send()) {
          $mail->ClearAddresses();
          $mail->clearReplyTos();

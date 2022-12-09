@@ -15,8 +15,8 @@ if (mysqli_num_rows($run_qry)>0) {
     // mail sending
     require 'phpmailer/PHPMailerAutoload.php';
     $mail = new PHPMailer;
-    $sender_email = $_SESSION['author_email'];
-    $sender_pass = 'iakuehmmdomricuc';
+    $sender_email = 'nazruljournal@gmail.com';
+    $sender_pass = 'xtvxnhzkczbybjff';
 
     $select_qry1 = "SELECT `main_editor_email` FROM `main_editor_information`";
     $run_qry1 = mysqli_query($conn, $select_qry1);
@@ -52,14 +52,14 @@ if (mysqli_num_rows($run_qry)>0) {
     $mail->Username = $sender_email; // Sender Email Id
     $mail->Password = $sender_pass; // password of gmail
 
-    $mail->setFrom($sender_email, 'AUTHOR');
+    $mail->setFrom($sender_email, 'JKKNIU');
 
     // $mail->addAddress($receiver); // Receiver Email Address
     $mail->addReplyTo($sender_email);
 
     $mail->isHTML(true);
     $mail->Subject = $body;
-    $mail->Body = '<h5>Dear Sir/Madam, <br />You are requested to check our '.$body.'. Please check those papers. <br /> <br /> Best Regards, AUTHOR</h5>';
+    $mail->Body = '<h5>Dear Sir/Madam, <br />You are requested to check our '.$body.'. Please check those papers. <br /> <br /> Best Regards, JKKNIU Journal Organization</h5>';
     if ($mail->send()) {
         $mail->ClearAddresses();
         $mail->clearReplyTos();

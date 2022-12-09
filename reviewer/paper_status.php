@@ -14,34 +14,52 @@ if (isset($_POST['submit'])) {
     } else if ($select_review == "Reject") {
         redirect("rejected_paper.php?id=" . $id);
     } else {
+        $_SESSION['comment_review'] = $comment_review;
         redirect("need_changes.php?id=" . $id . "&comment=" . $comment_review);
+    }
+}
+else if (isset($_POST['update'])) {
+    extract($_POST);
+    
+    function redirect($url)
+    {
+        header('Location: ' . $url);
+        ob_end_flush();
+    }
+    if ($select_review == "Accept") {
+        redirect("completed_paper.php?id=" . $id);
+    } else if ($select_review == "Reject") {
+        redirect("rejected_paper.php?id=" . $id);
+    } else {
+        $_SESSION['comment_review'] = $comment_review;
+        redirect("need_changes.php?id=" . $id . "&comment1=" . $comment_review);
     }
 }
 else if(isset($_GET['id'])){
     $id = $_GET['id'];
-    $comment = $_SESSION['comment'];
     if(isset($_SESSION['paper_status'])){
         if($_SESSION['paper_status']==6)
             $body = "accepted";
         else if($_SESSION['paper_status']==7)
             $body = "rejected";
-        else  if($_SESSION['paper_status']==8) 
+        else  if($_SESSION['paper_status']==8){
+            $comment = $_SESSION['comment'];
             $body = "needed to change/update - ".$comment;
+        }
     }
 
-    $_SESSION['author'] = $_COOKIE['author'];
+    // $_SESSION['author'] = $_COOKIE['author'];
     $author = $_SESSION['author'];
-    $select_qry = "SELECT `author_email` FROM `author_information` WHERE `author_name` = '$author'";
+    $select_qry = "SELECT * FROM `author_information` WHERE `author_name` = '$author'";
     $run_qry = mysqli_query($conn, $select_qry);
     if (mysqli_num_rows($run_qry) > 0) {
         $row = mysqli_fetch_assoc($run_qry);
         $_SESSION['author_email'] = $row['author_email'];
-
         // mail sending
     require 'phpmailer/PHPMailerAutoload.php';
     $mail = new PHPMailer;
-    $sender_email = $_SESSION['reviewer_email'];
-    $sender_pass = 'mxozkrbuxzrxirpm';
+    $sender_email = 'nazruljournal@gmail.com';
+    $sender_pass = 'xtvxnhzkczbybjff';
 
     $receiver = $_SESSION['author_email'];
     $mail->isSMTP(); // for localhost use enable this line otherwise don't use it
@@ -53,7 +71,7 @@ else if(isset($_GET['id'])){
     $mail->Username = $sender_email; // Sender Email Id
     $mail->Password = $sender_pass; // password of gmail
 
-    $mail->setFrom($sender_email, $_SESSION['reviewer_name']);
+    $mail->setFrom($sender_email, 'JKKNIU');
 
     $mail->addAddress($receiver); // Receiver Email Address
     $mail->addReplyTo($sender_email);
@@ -62,14 +80,15 @@ else if(isset($_GET['id'])){
 
     $mail->isHTML(true);
     $mail->Subject = "Paper Review";
-    $mail->Body = '<h5>Dear Sir/Madam, <br />Paper is successfully reviewed by the reviewer. Your paper is ' .$body.'. Please check your paper status. <br /> <br /> Best Regards, REVIEWER Journal Organization</h5>';
+    $mail->Body = '<h5>Dear Sir/Madam, <br />Paper is successfully reviewed by the reviewer. Your paper is ' .$body.'. Please check your paper status. <br /> <br /> Best Regards, JKKNIU Journal Organization</h5>';
     if ($mail->send()) {
         $mail->ClearAddresses();
         $mail->clearReplyTos();
         // mail_sent = 1 kore dilam er mane mail sent hoyse.
         $mail_sent = 1;
+
         $update_qry = "UPDATE `new_paper` SET `paper_status`=9 WHERE `id`='$id'";
-        $run_qry = mysqli_query($conn, $update_qry);
+        mysqli_query($conn, $update_qry);
         ?>
         <script>
             window.alert("Your Paper Has Successfully sent to the specific Author's email");

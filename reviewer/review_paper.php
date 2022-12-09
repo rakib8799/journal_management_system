@@ -33,7 +33,7 @@ if (isset($_GET['id'])) {
                     $run_select_from_new_paper = mysqli_query($conn, $select_from_new_paper);
                     $serial_no = 1;
                     if (mysqli_num_rows($run_select_from_new_paper) > 0) {
-                      while ($row = mysqli_fetch_assoc($run_select_from_new_paper)) {
+                      $row = mysqli_fetch_assoc($run_select_from_new_paper);
                     ?>
                     <tr>
                       <td>
@@ -65,18 +65,37 @@ if (isset($_GET['id'])) {
                           echo "selected" ?>>Need Changes</option>
                         </select>
                         <br><br>
-                        <textarea name="comment_review" id="comment_review" cols="30" rows="10"
-                          style="display:none"></textarea>
+                        <?php
+                        $select_comment = "SELECT * FROM `comment` WHERE `paper_id`='$id'";
+                        $run_select_comment = mysqli_query($conn, $select_comment);
+                        if (mysqli_num_rows($run_select_comment) > 0) {
+                          $row1 = mysqli_fetch_assoc($run_select_comment);
+                          // echo $row1['comment'];
+                          // $_SESSION['comment_select'] = $row1['comment'];
+                        }
+                        ?>
+                        <textarea name="comment_review" id="comment_review" cols="30" rows="10" 
+                          style="display:none"><?php if(isset($row1['comment'])) echo $row1['comment']?></textarea>
                       </td>
                       <td>
                         <input type="hidden" name="id" value="<?php echo $row['id'] ?>">
-                        <input type="submit" value="Submit" name="submit" class="btn btn-success text-white fw-bold">
+                        <?php
+                        if(isset($row1['comment'])){
+                          ?>
+                            <input type="submit" value="Update" name="update" class="btn btn-success text-white fw-bold">
+                          <?php
+                        }
+                        else{
+                          ?>
+                            <input type="submit" value="Submit" name="submit" class="btn btn-success text-white fw-bold">
+                          <?php
+                        }
+                        ?>
                       </td>
                     </tr>
                     <?php
                         $serial_no++;
                       }
-                    }
                     ?>
                   </tbody>
                 </table>

@@ -3,21 +3,25 @@
 if (isset($_GET["id"])) {
     $_SESSION['reviewer'] = $_COOKIE['reviewer'];
     $reviewer = $_SESSION['reviewer'];
-    $select_qry = "SELECT `reviewer_email` FROM `reviewer_information` WHERE `reviewer_name` = '$reviewer'";
+    $select_qry = "SELECT * FROM `reviewer_information` WHERE `reviewer_name` = '$reviewer'";
     $run_qry = mysqli_query($conn, $select_qry);
     if (mysqli_num_rows($run_qry) > 0) {
         $row = mysqli_fetch_assoc($run_qry);
         $_SESSION['reviewer_email'] = $row['reviewer_email'];
+        $reviewer_id = $row['id'];
 
     $id = $_GET["id"];
     $update_qry = "UPDATE `new_paper` SET `paper_status`=4 WHERE `id`='$id'";
     $run_qry = mysqli_query($conn, $update_qry);
 
+    $insert_qry = "UPDATE `new_paper` SET `reviewer_id`='$reviewer_id' WHERE `id`='$id'";
+    $run_qry = mysqli_query($conn, $insert_qry);
+
     // mail sending
     require 'phpmailer/PHPMailerAutoload.php';
     $mail = new PHPMailer;
-    $sender_email = $_SESSION['associative_editor_email'];
-    $sender_pass = 'uianqswruogvxnpv';
+    $sender_email = 'nazruljournal@gmail.com';
+    $sender_pass = 'xtvxnhzkczbybjff';
 
     $receiver = $_SESSION['reviewer_email'];
     $mail->isSMTP(); // for localhost use enable this line otherwise don't use it
@@ -29,14 +33,14 @@ if (isset($_GET["id"])) {
     $mail->Username = $sender_email; // Sender Email Id
     $mail->Password = $sender_pass; // password of gmail
 
-    $mail->setFrom($sender_email, $_SESSION['reviewer']);
+    $mail->setFrom($sender_email, 'JKKNIU');
 
     $mail->addAddress($receiver); // Receiver Email Address
     $mail->addReplyTo($sender_email);
 
     $mail->isHTML(true);
     $mail->Subject = "Paper Assign";
-    $mail->Body = '<h5>Dear Sir/Madam, <br />You have successfully assigned by the associative editor. Please check your paper status. <br /> <br /> Best Regards, ASSOCIATIVE EDITOR Journal Organization</h5>';
+    $mail->Body = '<h5>Dear Sir/Madam, <br />You have successfully assigned by the associative editor. Please check your paper status. <br /> <br /> Best Regards, JKKNIU Journal Organization</h5>';
     if ($mail->send()) {
         $mail->ClearAddresses();
         $mail->clearReplyTos();

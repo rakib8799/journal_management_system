@@ -3,9 +3,20 @@
 if (isset($_GET['id'], $_GET['comment'])) {
   $id = $_GET["id"];
   $comment = $_GET['comment'];
-  $_SESSION['comment'] = $comment;
   $update_qry = "UPDATE `new_paper` SET `paper_status`=8 WHERE `id`='$id'";
-  $run_qry = mysqli_query($conn, $update_qry);
+  mysqli_query($conn, $update_qry);
+
+    $insert_qry = "INSERT INTO `comment`(`paper_id`, `comment`) VALUES ('$id','$comment')";
+    mysqli_query($conn, $insert_qry);
+}
+else{
+  $id = $_GET["id"];
+  $comment1 = $_GET['comment1'];
+  $update_qry = "UPDATE `new_paper` SET `paper_status`=8 WHERE `id`='$id'";
+  mysqli_query($conn, $update_qry);
+  
+    $update_qry1 = "UPDATE `comment` SET `comment`='$comment1' WHERE `paper_id`='$id'";
+    mysqli_query($conn, $update_qry1);
 }
 ?>
 <body>
@@ -26,19 +37,20 @@ if (isset($_GET['id'], $_GET['comment'])) {
                     <th width="40%">Paper Title</th>
                     <th>Status</th>
                     <th>Comment</th>
-                    <th>Select</th>
+                    <th>Author Name</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   <?php
   // select paper information
-  $select_from_new_paper = "SELECT * FROM `new_paper` WHERE `paper_status`=8";
+  $select_from_new_paper = "SELECT * FROM `new_paper` WHERE `paper_status`=8 and `id`='$id'";
   $run_select_from_new_paper = mysqli_query($conn, $select_from_new_paper);
   $serial_no = 1;
   if (mysqli_num_rows($run_select_from_new_paper) > 0) {
-    while ($row = mysqli_fetch_assoc($run_select_from_new_paper)) {
+    $row = mysqli_fetch_assoc($run_select_from_new_paper);
       $_SESSION['paper_status'] = $row['paper_status'] ;
+      $author_id = $row['author_id'];
                   ?>
                   <tr>
                     <td>
@@ -51,25 +63,26 @@ if (isset($_GET['id'], $_GET['comment'])) {
                       <?php echo "Need Changes" ?>
                     </td>
                     <td class="text-danger fw-bold">
-                      <?php if(isset($_SESSION['comment'])) echo $_SESSION['comment']?>
+                    <?php
+                        $select_comment = "SELECT * FROM `comment` WHERE `paper_id`='$id'";
+                        $run_select_comment = mysqli_query($conn, $select_comment);
+                        if (mysqli_num_rows($run_select_comment) > 0) {
+                          $row2 = mysqli_fetch_assoc($run_select_comment);
+                          echo $row2['comment'];
+                          $_SESSION['comment'] = $row2['comment'];
+                        }
+                        ?>
                     </td>
                     <td>
-                        <select class="form-control" name="select_author" id="select_author" onchange="selectAuthor(this.value)">
-                          <option value="">Select Author</option>
-                          <?php
-                        $select_qry = "SELECT `author_name` FROM `author_information`";
-                        $run_qry = mysqli_query($conn, $select_qry);
-                        if (mysqli_num_rows($run_qry) > 0) {
-                          while ($row1 = mysqli_fetch_assoc($run_qry)) {
-                          ?>
-                          <option value="<?php echo $row1['author_name']; ?>">
-                            <?php echo $row1['author_name']; ?>
-                          </option>
-                          <?php
-                          }
-                        }
-                          ?>
-                        </select>
+                    <?php
+                    $select_author = "SELECT * FROM `author_information` WHERE `id`='$author_id'";
+                    $run_select_author = mysqli_query($conn, $select_author);
+                    if (mysqli_num_rows($run_select_author) > 0) {
+                      $row1 = mysqli_fetch_assoc($run_select_author);
+                      echo $row1['author_name'];
+                      $_SESSION['author'] = $row1['author_name'];
+                    }
+                    ?>
                       </td>
                     <td>
                     <a
@@ -79,7 +92,7 @@ if (isset($_GET['id'], $_GET['comment'])) {
                   <?php
       $serial_no++;
     }
-  }
+  // }
                   ?>
                 </tbody>
               </table>
@@ -90,11 +103,5 @@ if (isset($_GET['id'], $_GET['comment'])) {
       </div>
     </div>
   </div>
-  <script>
-    function selectAuthor(str){
-      const currentDate = new Date();
-      document.cookie = `author=${str}; expires=${new Date(currentDate.getTime() + (5 * 60 * 1000))}`;
-  }
-    </script>
 </body>
 <?php include('reviewer_footer.php') ?>

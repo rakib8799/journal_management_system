@@ -20,7 +20,7 @@
               <tbody>
                 <?php
                 // select paper information
-                $select_from_new_paper = "SELECT * FROM `new_paper` WHERE `paper_status` = 2";
+                $select_from_new_paper = "SELECT * FROM `new_paper` WHERE `associative_editor_id`='$_SESSION[associative_editor_id]' and `paper_status` = 2";
                 $run_select_from_new_paper = mysqli_query($conn, $select_from_new_paper);
                 $serial_no = 1;
                 while ($row = mysqli_fetch_assoc($run_select_from_new_paper)) {
