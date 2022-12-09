@@ -1,3 +1,4 @@
+<?php ob_start(); ?>
 <?php include('author_header.php') ?>
 <!-- Start of prvious php form (new_paper_submission) submission -->
 <?php
@@ -213,7 +214,7 @@ if (isset($_SESSION['next_page']) && $_SESSION['next_page'] == 1) {
         <div class="row justify-content-center">
           <div class="col-lg-4 col-md-4 col-12">
             <div class="mt-3">
-              <input type="submit" name="submit" class="form-control btn btn-success fw-bold" value="Submit Paper">
+              <input type="submit" name="submit" class="form-control btn btn-success fw-bold" value="Update Paper">
             </div>
           </div>
         </div>
@@ -360,12 +361,13 @@ if (isset($_POST['submit'])) {
        } else {
            echo "<h5>Mail is not sent yet</h5>";
        }
-?>
+       ?>
 <script>
-  // window.alert("Your Paper Has Successfully Submitted and a Mail is successfully sent to your email");
-  window.location = "paper_status.php";
+    window.alert("Your Paper Has Successfully Updated and a Mail is successfully sent to your email");
 </script>
 <?php
+header("Location: paper_status.php?id=".$id);
+ob_end_flush();
     }
   }
 }

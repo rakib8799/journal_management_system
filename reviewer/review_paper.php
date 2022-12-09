@@ -2,8 +2,6 @@
 <?php
 if (isset($_GET['id'])) {
   $id = $_GET["id"];
-  // $update_qry = "UPDATE `new_paper` SET `paper_status`=5 WHERE `id`='$id'";
-  // $run_qry = mysqli_query($conn, $update_qry);
 }
 ?>
 
