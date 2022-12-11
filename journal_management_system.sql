@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 25, 2022 at 05:01 PM
+-- Generation Time: Dec 11, 2022 at 04:05 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -75,6 +75,27 @@ INSERT INTO `author_information` (`id`, `author_name`, `author_designation`, `au
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `comment`
+--
+
+CREATE TABLE `comment` (
+  `id` int(11) NOT NULL,
+  `paper_id` int(11) DEFAULT NULL,
+  `comment` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `comment`
+--
+
+INSERT INTO `comment` (`id`, `paper_id`, `comment`) VALUES
+(6, 6, 'Update Your Paper..'),
+(25, 22, 'Change in Title'),
+(26, 11, 'Need to update manuscript file.');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `main_editor_information`
 --
 
@@ -105,6 +126,8 @@ INSERT INTO `main_editor_information` (`id`, `main_editor_name`, `main_editor_de
 CREATE TABLE `new_paper` (
   `id` int(11) NOT NULL,
   `author_id` int(11) NOT NULL,
+  `associative_editor_id` int(11) DEFAULT NULL,
+  `reviewer_id` int(11) DEFAULT NULL,
   `paper_title` varchar(1000) NOT NULL,
   `paper_abstract` varchar(5000) NOT NULL,
   `paper_keywords` varchar(1000) NOT NULL,
@@ -125,14 +148,14 @@ CREATE TABLE `new_paper` (
 -- Dumping data for table `new_paper`
 --
 
-INSERT INTO `new_paper` (`id`, `author_id`, `paper_title`, `paper_abstract`, `paper_keywords`, `paper_type`, `authors_name`, `authors_affiliation`, `authors_designation`, `authors_email`, `manuscript_pdf`, `cover_letter_pdf`, `manuscript_image`, `supplimentary_file`, `paper_status`, `timestamps`) VALUES
-(2, 2, 'First Paper', 'This is my first paper about abortion', 'first, adult, abortion', 'original research(full paper)', 'rejwanc,kamal', 'jkkniu,jkkniu', 'student,professor', 'rejwan10@gmail.com,kamal@gmail.com', '1665667739.pdf', '1665667739.pdf', '1665667739.', '1665667739.pdf', 1, '2022-10-13 13:28:59'),
-(3, 2, 'asd', 'sfdsf', 'sfs', 'original research(full paper)', '', '', '', '', '1665668029.pdf', '1665668029.pdf', '1665668029.', '1665668029.pdf', 1, '2022-10-13 13:35:49'),
-(4, 2, 'second paper', 'dsfksd;lf', 'sfkslf', 'original research(full paper)', '', '', '', '', '1665668103.pdf', '1665668103.pdf', '', '1665668103.pdf', 1, '2022-10-13 13:35:03'),
-(5, 3, 'third paper', 'this is my third paper', 'hudai', 'original research(full paper)', '', '', '', '', '1667109474.pdf', '1667109474.pdf', '', '1667109474.pdf', 1, '2022-10-30 05:57:54'),
-(6, 4, 'Fourth Paper', 'DSA', 'Data,Structure,Algorithms', 'original research(full paper)', 'Dr. Ujjol Kumar Pradhan,Pranab Mondol,Tushar Kanti Saha', 'JKKNIU,JKKNIU,JKKNIU', 'Professor,Assistant Professor,Professor', 'ujjolkumar@gmail.com,pranabmondol@gmail.com,tusharkantisaha@gmail.com', '1668953648.pdf', '1668953648.pdf', '1668953648.jpg', '1668953648.pdf', 1, '2022-11-20 14:14:08'),
-(11, 4, 'Sixth Paper', 'MP', 'micro,processor', 'requested paper', 'Mahbubun Nahar', 'JKKNIU', 'Assistant Professor', 'mahbubunnahar@gmail.com', '1668962552.pdf', '1668962552.pdf', '1668962552.jpg', '1668962552.pdf', 1, '2022-11-20 16:42:32'),
-(22, 4, 'Fifth Paper', 'OS', 'Algo,OS', 'original research(short paper)', 'Rubya Shahrin,Dr. Selim Al Mamun', 'JKKNIU,JKKNIU', 'Assistant Professor,Associate Professor', 'rubyashahrin@gmail.com,selimalmamun@gmail.com', '1668974313.pdf', '1668974313.pdf', '1668974313.jpg', '1668974313.pdf', 1, '2022-11-20 19:58:33');
+INSERT INTO `new_paper` (`id`, `author_id`, `associative_editor_id`, `reviewer_id`, `paper_title`, `paper_abstract`, `paper_keywords`, `paper_type`, `authors_name`, `authors_affiliation`, `authors_designation`, `authors_email`, `manuscript_pdf`, `cover_letter_pdf`, `manuscript_image`, `supplimentary_file`, `paper_status`, `timestamps`) VALUES
+(2, 2, NULL, NULL, 'First Paper', 'This is my first paper about abortion', 'first, adult, abortion', 'original research(full paper)', 'rejwanc,kamal', 'jkkniu,jkkniu', 'student,professor', 'rejwan10@gmail.com,kamal@gmail.com', '1665667739.pdf', '1665667739.pdf', '1665667739.', '1665667739.pdf', 1, '2022-12-09 09:41:14'),
+(3, 2, NULL, NULL, 'asd', 'sfdsf', 'sfs', 'original research(full paper)', '', '', '', '', '1665668029.pdf', '1665668029.pdf', '1665668029.', '1665668029.pdf', 1, '2022-12-09 09:41:17'),
+(4, 2, NULL, NULL, 'second paper', 'dsfksd;lf', 'sfkslf', 'original research(full paper)', '', '', '', '', '1665668103.pdf', '1665668103.pdf', '', '1665668103.pdf', 1, '2022-12-09 10:45:34'),
+(5, 3, NULL, NULL, 'third paper', 'this is my third paper', 'hudai', 'original research(full paper)', '', '', '', '', '1667109474.pdf', '1667109474.pdf', '', '1667109474.pdf', 1, '2022-12-09 09:41:25'),
+(6, 4, NULL, NULL, 'Fourth Paper For US', 'DSA', 'Data,Structure,Algorithms', 'original research(full paper)', 'Dr. Ujjol Kumar Pradhan,Pranab Mondol,Tushar Kanti Saha', 'JKKNIU,JKKNIU,JKKNIU', 'Professor,Assistant Professor,Professor', 'ujjolkumar@gmail.com,pranabmondol@gmail.com,tusharkantisaha@gmail.com', '1670583412.pdf', '1670583412.pdf', '', '1670583412.pdf', 1, '2022-12-11 15:04:25'),
+(11, 4, NULL, NULL, 'Sixth Paper', 'MP', 'micro,processor', 'requested paper', 'Mahbubun Nahar', 'JKKNIU', 'Assistant Professor', 'mahbubunnahar@gmail.com', '1668962552.pdf', '1668962552.pdf', '1668962552.jpg', '1668962552.pdf', 1, '2022-12-11 15:04:33'),
+(22, 4, NULL, NULL, 'Fifth Paper', 'OS', 'Algo,OS', 'original research(short paper)', 'Rubya Shahrin,Dr. Selim Al Mamun', 'JKKNIU,JKKNIU', 'Assistant Professor,Associate Professor', 'rubyashahrin@gmail.com,selimalmamun@gmail.com', '1668974313.pdf', '1668974313.pdf', '1668974313.jpg', '1668974313.pdf', 1, '2022-12-11 15:04:37');
 
 -- --------------------------------------------------------
 
@@ -176,6 +199,13 @@ ALTER TABLE `author_information`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `comment`
+--
+ALTER TABLE `comment`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `paper_id` (`paper_id`);
+
+--
 -- Indexes for table `main_editor_information`
 --
 ALTER TABLE `main_editor_information`
@@ -185,7 +215,9 @@ ALTER TABLE `main_editor_information`
 -- Indexes for table `new_paper`
 --
 ALTER TABLE `new_paper`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `associative_editor_id` (`associative_editor_id`),
+  ADD KEY `reviewer_id` (`reviewer_id`);
 
 --
 -- Indexes for table `reviewer_information`
@@ -210,6 +242,12 @@ ALTER TABLE `author_information`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `comment`
+--
+ALTER TABLE `comment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
 -- AUTO_INCREMENT for table `main_editor_information`
 --
 ALTER TABLE `main_editor_information`
@@ -219,13 +257,30 @@ ALTER TABLE `main_editor_information`
 -- AUTO_INCREMENT for table `new_paper`
 --
 ALTER TABLE `new_paper`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `reviewer_information`
 --
 ALTER TABLE `reviewer_information`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `comment`
+--
+ALTER TABLE `comment`
+  ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`paper_id`) REFERENCES `new_paper` (`id`);
+
+--
+-- Constraints for table `new_paper`
+--
+ALTER TABLE `new_paper`
+  ADD CONSTRAINT `new_paper_ibfk_1` FOREIGN KEY (`associative_editor_id`) REFERENCES `associative_editor_information` (`id`),
+  ADD CONSTRAINT `new_paper_ibfk_2` FOREIGN KEY (`reviewer_id`) REFERENCES `reviewer_information` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

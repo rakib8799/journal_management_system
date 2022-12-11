@@ -9,7 +9,7 @@ if (isset($_GET['id'], $_GET['comment'])) {
     $insert_qry = "INSERT INTO `comment`(`paper_id`, `comment`) VALUES ('$id','$comment')";
     mysqli_query($conn, $insert_qry);
 }
-else{
+else if((isset($_GET['id'], $_GET['comment1']))){
   $id = $_GET["id"];
   $comment1 = $_GET['comment1'];
   $update_qry = "UPDATE `new_paper` SET `paper_status`=8 WHERE `id`='$id'";
